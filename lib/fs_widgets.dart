@@ -41,28 +41,8 @@ class _HookConsumerWidget extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) => builder(context, ref);
 }
 
-class Stateless {
-  const Stateless._();
-  Widget operator |(BuildFunction builder) => _StatelessWidget(builder);
-}
-
-class Consumer {
-  const Consumer._();
-  Widget operator |(BuildFunctionWithRef builder) => _ConsumerWidget(builder);
-}
-
-class Hook {
-  const Hook._();
-  Widget operator |(BuildFunction builder) => _HookWidget(builder);
-}
-
-class HookConsumer {
-  const HookConsumer._();
-  Widget operator |(BuildFunctionWithRef builder) =>
-      _HookConsumerWidget(builder);
-}
-
-const statelessWidget = Stateless._();
-const consumerWidget = Consumer._();
-const hookWidget = Hook._();
-const hookConsumerWidget = HookConsumer._();
+Widget statelessWidget(BuildFunction builder) => _StatelessWidget(builder);
+Widget hookWidget(BuildFunction builder) => _HookWidget(builder);
+Widget consumerWidget(BuildFunctionWithRef builder) => _ConsumerWidget(builder);
+Widget hookConsumerWidget(BuildFunctionWithRef builder) =>
+    _HookConsumerWidget(builder);
