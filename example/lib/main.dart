@@ -2,24 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:fs_widgets/fs_widgets.dart';
 
 void main() {
-  runApp(myApp());
+  runApp(const StatelessComponent(myApp));
 }
 
-Widget myApp() {
-  return statelessWidget((context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: myHomePage(title: 'Flutter Demo Home Page'),
-    );
-  });
+Widget myApp(BuildContext _) {
+  return MaterialApp(
+    title: 'Flutter Demo',
+    theme: ThemeData(
+      primarySwatch: Colors.blue,
+    ),
+    home: myHomePage(title: 'Flutter Demo Home Page'),
+  );
 }
 
 Widget myHomePage({required String title}) {
   var counter = 0;
-  return statefulWidget((context, setState) {
+  return StatefulComponent((context, setState) {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),

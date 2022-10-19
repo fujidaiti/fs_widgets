@@ -1,6 +1,6 @@
 library fs_widgets;
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -14,55 +14,47 @@ typedef SetStateFunction = void Function(void Function());
 typedef BuildFunctionWithRef = Widget Function(
     BuildContext context, WidgetRef ref);
 
-class _StatelessWidget extends StatelessWidget {
+class StatelessComponent extends StatelessWidget {
   final BuildFunction builder;
-  const _StatelessWidget(this.builder);
+  const StatelessComponent(this.builder, {super.key});
 
   @override
   Widget build(BuildContext context) => builder(context);
 }
 
-class _StatefulWidget extends StatefulWidget {
+class StatefulComponent extends StatefulWidget {
   final BuildFunctionWithSetState builder;
-  const _StatefulWidget(this.builder);
+  const StatefulComponent(this.builder, {super.key});
 
   @override
-  State<StatefulWidget> createState() => _State();
+  State<StatefulWidget> createState() => _ComponentState();
 }
 
-class _State extends State<_StatefulWidget> {
+class _ComponentState extends State<StatefulComponent> {
   @override
   Widget build(BuildContext context) => widget.builder(context, setState);
 }
 
-class _ConsumerWidget extends ConsumerWidget {
+class ConsumerComponent extends ConsumerWidget {
   final BuildFunctionWithRef builder;
-  const _ConsumerWidget(this.builder);
+  const ConsumerComponent(this.builder, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => builder(context, ref);
 }
 
-class _HookWidget extends HookWidget {
+class HookComponent extends HookWidget {
   final BuildFunction builder;
-  const _HookWidget(this.builder);
+  const HookComponent(this.builder, {super.key});
 
   @override
   Widget build(BuildContext context) => builder(context);
 }
 
-class _HookConsumerWidget extends HookConsumerWidget {
+class HookConsumerComponent extends HookConsumerWidget {
   final BuildFunctionWithRef builder;
-  const _HookConsumerWidget(this.builder);
+  const HookConsumerComponent(this.builder, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => builder(context, ref);
 }
-
-Widget statelessWidget(BuildFunction builder) => _StatelessWidget(builder);
-Widget statefulWidget(BuildFunctionWithSetState builder) =>
-    _StatefulWidget(builder);
-Widget hookWidget(BuildFunction builder) => _HookWidget(builder);
-Widget consumerWidget(BuildFunctionWithRef builder) => _ConsumerWidget(builder);
-Widget hookConsumerWidget(BuildFunctionWithRef builder) =>
-    _HookConsumerWidget(builder);
