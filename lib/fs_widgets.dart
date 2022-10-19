@@ -6,6 +6,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 typedef BuildFunction = Widget Function(BuildContext context);
 
+typedef BuildFunctionWithSetState = Widget Function(
+    BuildContext context, SetStateFunction setState);
+
+typedef SetStateFunction = void Function(void Function());
+
 typedef BuildFunctionWithRef = Widget Function(
     BuildContext context, WidgetRef ref);
 
@@ -15,6 +20,19 @@ class _StatelessWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => builder(context);
+}
+
+class _StatefulWidget extends StatefulWidget {
+  final BuildFunctionWithSetState builder;
+  const _StatefulWidget(this.builder);
+
+  @override
+  State<StatefulWidget> createState() => _State();
+}
+
+class _State extends State<_StatefulWidget> {
+  @override
+  Widget build(BuildContext context) => widget.builder(context, setState);
 }
 
 class _ConsumerWidget extends ConsumerWidget {
@@ -42,6 +60,8 @@ class _HookConsumerWidget extends HookConsumerWidget {
 }
 
 Widget statelessWidget(BuildFunction builder) => _StatelessWidget(builder);
+Widget statefulWidget(BuildFunctionWithSetState builder) =>
+    _StatefulWidget(builder);
 Widget hookWidget(BuildFunction builder) => _HookWidget(builder);
 Widget consumerWidget(BuildFunctionWithRef builder) => _ConsumerWidget(builder);
 Widget hookConsumerWidget(BuildFunctionWithRef builder) =>
